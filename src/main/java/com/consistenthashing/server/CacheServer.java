@@ -88,6 +88,10 @@ public class CacheServer {
         validateKey(key);
         checkServerActive();
 
+        if (value == null) {
+            throw new IllegalArgumentException("Value cannot be null");
+        }
+
         Object previousValue = cache.put(key, value);
 
         if (previousValue == null) {
