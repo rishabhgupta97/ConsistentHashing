@@ -12,7 +12,7 @@ A production-ready, thread-safe implementation of **Consistent Hashing** algorit
 This comprehensive consistent hashing implementation provides:
 
 - **Production-Ready Code**: Thread-safe, well-documented, with comprehensive error handling
-- **Real-World Scenarios**: Complete distributed cache simulation with server failures and recovery  
+- **Real-World Scenarios**: Complete distributed cache simulation with server failures and recovery
 - **Performance Analysis**: Detailed benchmarks comparing with simple modulo hashing
 - **Educational Value**: Covers all major consistent hashing concepts with practical examples
 - **Enterprise Quality**: 95%+ test coverage, builder patterns, comprehensive metrics## 📚 What is Consistent Hashing?
@@ -167,25 +167,33 @@ _Benchmarks run on: MacBook Pro M1, 16GB RAM, Java 11_
 ## ⚖️ Tradeoffs and Design Decisions
 
 ### Virtual Nodes Tradeoff
+
 **Benefit**: Better load distribution and fault tolerance
 **Cost**: Higher memory usage and setup complexity
+
 - 150 virtual nodes per server uses ~3x more memory than single nodes
 - Optimal range: 100-200 virtual nodes balances distribution quality vs memory
 
 ### Hash Function Choice
+
 **SHA-256 vs Simpler Hashes**:
+
 - **SHA-256**: Excellent distribution, cryptographically secure, but slower (~200ns vs ~50ns)
 - **MD5/CRC32**: Faster but poorer distribution and potential security concerns
 - Decision: SHA-256 chosen for quality over speed in most distributed systems
 
 ### Thread Safety Strategy
+
 **ReadWriteLock vs Synchronized vs Lock-Free**:
+
 - **ReadWriteLock**: Allows concurrent reads, exclusive writes - chosen for read-heavy workloads
 - **Synchronized**: Simpler but blocks all operations during any modification
 - **Lock-Free**: Best performance but significantly more complex implementation
 
 ### Memory vs Performance
+
 **TreeMap vs HashMap**:
+
 - **TreeMap**: O(log n) operations, ordered traversal for hash ring - chosen
 - **HashMap**: O(1) average case but can't efficiently find "next" server
 - **Skip List**: Similar performance to TreeMap but more complex
